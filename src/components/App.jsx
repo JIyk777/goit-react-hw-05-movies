@@ -1,16 +1,10 @@
-import { Route, Routes, NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import { Route, Routes } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
+import { AppNav } from './AppStyle';
+import { AppLink } from './AppStyle';
 
-const StyledLink = styled(NavLink)`
-  color: black;
-
-  &.active {
-    color: orange;
-  }
-`;
 const Movies = lazy(() => import('pages/Movies'));
-const Home = lazy(() => import('pages/Home'));
+const Home = lazy(() => import('pages/Home/Home'));
 const MovieDetails = lazy(() => import('./MovieDetails/MovieDetails'));
 const Review = lazy(() => import('./MovieDetails/Review'));
 const Cast = lazy(() => import('./MovieDetails/Cast'));
@@ -19,12 +13,12 @@ console.log(Movies);
 export const App = () => {
   return (
     <div>
-      <nav>
-        <StyledLink to="/" end>
+      <AppNav>
+        <AppLink to="/" end>
           Home
-        </StyledLink>
-        <StyledLink to="/movies">Movies</StyledLink>
-      </nav>
+        </AppLink>
+        <AppLink to="/movies">Movies</AppLink>
+      </AppNav>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<Home />} />
