@@ -19,7 +19,7 @@ const Cast = () => {
           <>
             {item.profile_path === null ? (
               <img
-                src="https://rus-pic.ru/wp-content/uploads/2021/12/avatarki-dlja-malchikov-41-foto-e7202eb.jpg"
+                src="https://klike.net/uploads/posts/2019-03/1551511791_8.jpg"
                 alt=""
                 width="200px"
                 height="300px"
