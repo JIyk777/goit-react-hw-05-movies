@@ -1,6 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useParams, useLocation } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Box } from 'components/box/Box';
+import {
+  MovieTitle,
+  MovieOverview,
+  MovieGenres,
+  MovieGenresBox,
+  MoviePoster,
+  BackBtn,
+  MovieLinkBox,
+  MovieLink,
+} from './MovieDetailsStyle';
+import { MovieDetailsFetch } from 'fetch/MovieDetailsFetch';
 
 export const MovieDetails = () => {
   const { movieId } = useParams();
@@ -9,56 +20,65 @@ export const MovieDetails = () => {
   const backLinkHref = location.state?.from ?? '/movies';
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}?api_key=5a1111e9d2c7100474f9cf656ec9c27e&language=en-US`
-    )
-      .then(r => r.json())
+    MovieDetailsFetch(movieId)
       .then(r => setMovie(r))
       .catch(r => console.log(r));
   }, [movieId]);
   if (!movie) {
     return;
   }
-  console.log(movie);
+
   return (
-    <div>
-      <Link to={backLinkHref}>Back</Link>
+    <Box width="1280px" marginLeft="auto" marginRight="auto" padding="30px">
+      <BackBtn to={backLinkHref}>Go Back</BackBtn>
       {movie.status_code === 34 ? (
         <div>Error</div>
       ) : (
         <>
-          <img
-            src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
-            alt=""
-          ></img>
+          <Box
+            display="flex"
+            width="1280px"
+            marginLeft="auto"
+            marginRight="auto"
+            padding="30px"
+            justifyContent="center"
+          >
+            <MoviePoster
+              src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
+              alt=""
+            ></MoviePoster>
+            <Box marginLeft="50px" width="50%">
+              <MovieTitle>{movie.original_title}</MovieTitle>
 
-          <h2>{movie.original_title}</h2>
+              <div>
+                <MovieOverview>Overview</MovieOverview>
+                <p>{movie.overview}</p>
+              </div>
 
-          <div>
-            <span>Overview</span>
-            <p>{movie.overview}</p>
-          </div>
+              <div>
+                <MovieGenres>Genres</MovieGenres>
+                <MovieGenresBox>
+                  {movie.genres.map(item => (
+                    <span key={item.name}>{item.name}</span>
+                  ))}
+                </MovieGenresBox>
+              </div>
+            </Box>
+          </Box>
 
-          <div>
-            <p>Genres</p>
-            {movie.genres.map(item => (
-              <span key={item.name}>{item.name}</span>
-            ))}
-          </div>
-
-          <ul>
-            <Link to="cast" state={{ from: backLinkHref }}>
+          <MovieLinkBox>
+            <MovieLink to="cast" state={{ from: backLinkHref }}>
               <li>Cast</li>
-            </Link>
-            <Link to="review" state={{ from: backLinkHref }}>
+            </MovieLink>
+            <MovieLink to="review" state={{ from: backLinkHref }}>
               <li>Review</li>
-            </Link>
-          </ul>
+            </MovieLink>
+          </MovieLinkBox>
 
           <Outlet />
         </>
       )}
-    </div>
+    </Box>
   );
 };
 

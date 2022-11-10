@@ -1,20 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { HomeUl, HomeLink, HomeTitle, HomeLi, HomeImg } from './HomeStyle';
+import { Box } from 'components/box/Box';
+import { HomeFetch } from 'fetch/HomeFetch';
 
 const Home = () => {
   const [allMovies, setAllMovies] = useState([]);
   const location = useLocation();
 
   useEffect(() => {
-    fetch(
-      'https://api.themoviedb.org/3/trending/all/day?api_key=5a1111e9d2c7100474f9cf656ec9c27e'
-    )
-      .then(r => r.json())
-      .then(r => setAllMovies(r.results));
+    HomeFetch().then(r => setAllMovies(r.results));
   }, []);
   return (
-    <div>
+    <Box width="1280px" marginLeft="auto" marginRight="auto">
       <HomeTitle>Trending today</HomeTitle>
       <HomeUl>
         {allMovies.map(movie => (
@@ -36,7 +34,7 @@ const Home = () => {
           </HomeLink>
         ))}
       </HomeUl>
-    </div>
+    </Box>
   );
 };
 

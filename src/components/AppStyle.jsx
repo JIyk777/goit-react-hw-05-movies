@@ -11,6 +11,7 @@ export const AppNav = styled.nav`
 
 export const AppLink = styled(NavLink)`
   color: black;
+  text-decoration: none;
 
   &.active {
     color: orange;

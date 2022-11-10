@@ -3,11 +3,11 @@ import { lazy, Suspense } from 'react';
 import { AppNav } from './AppStyle';
 import { AppLink } from './AppStyle';
 
-const Movies = lazy(() => import('pages/Movies'));
+const Movies = lazy(() => import('pages/Movies/Movies'));
 const Home = lazy(() => import('pages/Home/Home'));
 const MovieDetails = lazy(() => import('./MovieDetails/MovieDetails'));
-const Review = lazy(() => import('./MovieDetails/Review'));
-const Cast = lazy(() => import('./MovieDetails/Cast'));
+const Review = lazy(() => import('./MovieDetails/Review/Review'));
+const Cast = lazy(() => import('./MovieDetails/Cast/Cast'));
 console.log(Movies);
 
 export const App = () => {
